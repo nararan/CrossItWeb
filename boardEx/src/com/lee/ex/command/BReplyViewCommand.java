@@ -6,16 +6,17 @@ import javax.servlet.http.HttpServletResponse;
 import com.lee.ex.bao.BDao;
 import com.lee.ex.dto.BDto;
 
-public class BContentCommand implements BCommand {
+public class BReplyViewCommand implements BCommand {
 
 	@Override
 	public void excute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		String bId = request.getParameter("bId");
-		BDao dao = new BDao();
-		BDto dto = dao.contentView(bId);
 		
-		request.setAttribute("content_view", dto);
+		BDao dao = new BDao();
+		BDto dto = dao.reply_view(bId);
+		
+		request.setAttribute("reply_view", dto);
 	}
 
 }

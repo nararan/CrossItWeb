@@ -31,6 +31,7 @@ public class BFrontController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		System.out.println("doGet");
 		actionDo(request, response);
 	}
 
@@ -39,6 +40,7 @@ public class BFrontController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		System.out.println("doPost");
 		actionDo(request, response);
 	}
 
@@ -68,6 +70,22 @@ public class BFrontController extends HttpServlet {
 			command = new BContentCommand();
 			command.excute(request, response);
 			viewPage = "content_view.jsp";
+		} else if(com.equals("/modify.do")) {
+			command = new BModifyCommand();
+			command.excute(request, response);
+			viewPage = "list.do";
+		} else if(com.equals("/delete.do")) {
+			command = new BDeleteCommand();
+			command.excute(request, response);
+			viewPage = "list.do";
+		} else if(com.equals("/reply_view.do")) {
+			command = new BReplyViewCommand();
+			command.excute(request, response);
+			viewPage = "reply_view.jsp";
+		} else if(com.equals("/reply.do")) {
+			command = new BReplyCommand();
+			command.excute(request, response);
+			viewPage = "list.do";
 		}
 		
 		RequestDispatcher dispathcer = request.getRequestDispatcher(viewPage);
