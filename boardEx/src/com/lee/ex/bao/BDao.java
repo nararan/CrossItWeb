@@ -13,7 +13,10 @@ import javax.sql.DataSource;
 import com.lee.ex.dto.BDto;
 
 public class BDao {
-	DataSource dataSource;
+	private Connection con = null;
+	private PreparedStatement pstmt = null;
+	private ResultSet rs = null;
+	private DataSource dataSource;
 	
 	public BDao() {
 		try {
@@ -25,9 +28,6 @@ public class BDao {
 	}
 	
 	public void write(String bName, String bTitle, String bContent) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		
 		try {
 			con = dataSource.getConnection();
 			String query = "insert into mvc_board (bName, bTitle, bContent, bHit, bGroup, bStep, bIndent) values (?, ?, ?, 0, 0, 0, 0)";
@@ -50,9 +50,6 @@ public class BDao {
 	
 	public ArrayList<BDto> list() {
 		ArrayList<BDto> dtos = new ArrayList<BDto>();
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 		
 		try {
 			con = dataSource.getConnection();
@@ -61,7 +58,7 @@ public class BDao {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				int bId = rs.getInt("id");
+				int bId = rs.getInt("bId");
 				String bName = rs.getString("bName");
 				String bTitle = rs.getString("bTtitle");
 				String bContent = rs.getString("bContent");
@@ -74,9 +71,53 @@ public class BDao {
 				BDto dto = new BDto(bId, bName, bTitle, bContent, bDate, bHit, bGroup, bStep, bIndent);
 				dtos.add(dto);
 			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if(pstmt != null) pstmt.close();
+				if(con != null) con.close();
+			} catch(Exception e2) {
+				e2.printStackTrace();
+			}
 		}
 		
 		return dtos;
+	}
+	
+	public BDto contentView(int bId) {
+		BDto dto = null;
+		
+		try {
+			con = dataSource.getConnection();
+			String query = "select * from mvc_board where bId = ?";
+			pstmt.setInt(1, bId);
+			pstmt = con.prepareStatement(query);
+			
+			String bName = rs.getString("bname");
+			String bTitle = rs.getString("bTtitle");
+			String bContent = rs.getString("bContent");
+			Timestamp bDate = rs.getTimestamp("bDate");
+			int bHit = rs.getInt("bHit");
+			int bGroup = rs.getInt("bGroup");
+			int bStep = rs.getInt("bStep");
+			int bIndent = rs.getInt("bIndent");
+			
+			dto = new BDto(bId, bName, bTitle, bContent, bDate, bHit, bGroup, bStep, bIndent);
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if(pstmt != null) pstmt.close();
+				if(con != null) con.close();
+			} catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return dto;
 	}
 
 }

@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.lee.ex.command.*;
+
 /**
  * Servlet implementation class BFrontController
  */
@@ -59,7 +61,13 @@ public class BFrontController extends HttpServlet {
 			command.excute(request, response);
 			viewPage = "list.do";
 		} else if(com.equals("/list.do")) {
-			
+			command = new BListCommand();
+			command.excute(request, response);
+			viewPage = "list.jsp";
+		} else if(com.equals("/content_view.do")) {
+			command = new BContentCommand();
+			command.excute(request, response);
+			viewPage = "content_view.jsp";
 		}
 		
 		RequestDispatcher dispathcer = request.getRequestDispatcher(viewPage);
