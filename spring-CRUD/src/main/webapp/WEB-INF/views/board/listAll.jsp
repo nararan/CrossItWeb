@@ -7,7 +7,7 @@
 <script>
 	var result = '${msg}';
 	
-	if(result == 'success') {
+	if(result == 'SUCCESS') {
 		alert("처리가 완료되었습니다.");
 	}
 </script>
@@ -16,7 +16,7 @@
 		<div class="col-md-12">
 			<div class="box">
 				<div class="box-header with-border">
-					<h3 class="box-title">REGISTER BOARD</h3>
+					<h3 class="box-title">LIST BOARD</h3>
 				</div>
 
 				<div class="box-body">				
