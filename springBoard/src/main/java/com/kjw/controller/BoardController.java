@@ -23,13 +23,13 @@ public class BoardController {
 	@Inject
 	private BoardService service;
 	
-	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	@RequestMapping(value = "/register", method = RequestMethod.GET) //등록 페이지로 이동
 	public void registGET(BoardVO board, Model model)throws Exception{
 		
 		logger.info("register get......");
 	}
 	
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	@RequestMapping(value = "/register", method = RequestMethod.POST) //실제 등록 작업 처리
 //	public String registPOST(BoardVO board, Model model)throws Exception{
 	public String registPOST(BoardVO board, RedirectAttributes rttr)throws Exception{
 		
@@ -47,7 +47,7 @@ public class BoardController {
 	}
 	
 	
-	@RequestMapping(value = "/listAll", method = RequestMethod.GET)
+	@RequestMapping(value = "/listAll", method = RequestMethod.GET) //전체 목록 보기
 	public void listAll(Model model)throws Exception{
 		
 		logger.info("show all list......");
@@ -56,9 +56,40 @@ public class BoardController {
 	}
 	
 	
-	@RequestMapping(value = "/read", method = RequestMethod.GET)
+	@RequestMapping(value = "/read", method = RequestMethod.GET) //글 하나 조회
 	public void read(@RequestParam("bno") int bno, Model model)throws Exception{
 		
 		model.addAttribute(service.read(bno)); //BoardVO클래스의 객체임으로 boardVO로 저장됨!
+	}
+	
+	
+	@RequestMapping(value = "/remove", method = RequestMethod.POST) //글 삭제
+	public String remove(@RequestParam("bno") int bno, RedirectAttributes rttr)throws Exception{
+		
+		service.remove(bno);
+		
+		rttr.addFlashAttribute("msg", "success");
+		
+		return "redirect:/listAll";
+	}
+	
+	
+	@RequestMapping(value = "/modify", method = RequestMethod.GET) //
+	public void modifyGET(int bno, Model model)throws Exception{
+		
+		logger.info("modify get......");
+		
+		model.addAttribute(service.read(bno));
+	}
+	
+	@RequestMapping(value = "/modify", method = RequestMethod.POST) //실제 수정 작업 처리
+	public String modifyPOST(BoardVO board, RedirectAttributes rttr)throws Exception{
+		
+		logger.info("modify post......");
+		
+		service.modify(board);
+		rttr.addAttribute("msg", "success");
+		
+		return "redirect:/listAll";
 	}
 }
