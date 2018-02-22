@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.kjw.domain.BoardVO;
+import com.kjw.domain.Criteria;
 import com.kjw.persistence.BoardDAO;
 
 //스프링 빈으로 인식되기 위해 @Service 사용.
@@ -49,6 +50,13 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		
 		return dao.listAll();
+	}
+
+	@Override
+	public List<BoardVO> listCriteria(Criteria cri) throws Exception {
+		// TODO Auto-generated method stub
+		
+		return dao.listCriteria(cri);
 	}
 
 }

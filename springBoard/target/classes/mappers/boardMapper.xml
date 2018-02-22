@@ -34,4 +34,24 @@
 	]]>
 	</select>
 	
+	<select id = "listPage" resultType = "com.kjw.domain.BoardVO">
+	<![CDATA[
+	select bno, title, content, writer, regdate, viewcnt
+	from spring_board
+	where bno > 0
+	order by bno desc, regdate desc
+	limit #{page}, 10
+	]]>
+	</select>	
+	
+	<select id = "listCriteria" resultType = "com.kjw.domain.BoardVO">
+	<![CDATA[
+	select bno, title, content, writer, regdate, viewcnt
+	from spring_board
+	where bno > 0
+	order by bno desc, regdate desc
+	limit #{pageStart}, #{perPageNum}
+	]]>
+	</select>	
+	
 </mapper>

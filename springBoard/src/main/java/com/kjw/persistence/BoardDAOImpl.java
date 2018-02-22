@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.kjw.domain.BoardVO;
+import com.kjw.domain.Criteria;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO {
@@ -50,6 +51,27 @@ public class BoardDAOImpl implements BoardDAO {
 		// TODO Auto-generated method stub
 		
 		return session.selectList(namespace+".listAll");
+	}
+
+	@Override
+	public List<BoardVO> listPage(int page) throws Exception {
+		// TODO Auto-generated method stub
+		
+		if(page == 0){
+			page = 1;
+		}
+		
+		//page에 시작 데이터 번호가 들어감!
+		page = (page - 1) * 10;//1페이지면 0번부터~, 2페이지면 10번부터~, 3페이지면 20번부터~ ...
+		
+		return session.selectList(namespace+".listPage", page);
+	}
+
+	@Override
+	public List<BoardVO> listCriteria(Criteria cri) throws Exception {
+		// TODO Auto-generated method stub
+		
+		return session.selectList(namespace+".listCriteria", cri);
 	}
 
 }

@@ -3,6 +3,7 @@ package com.kjw.persistence;
 import java.util.List;
 
 import com.kjw.domain.BoardVO;
+import com.kjw.domain.Criteria;
 
 public interface BoardDAO {
 
@@ -15,4 +16,8 @@ public interface BoardDAO {
 	public void delete(Integer bno)throws Exception;
 	
 	public List<BoardVO> listAll()throws Exception;
+	
+	public List<BoardVO> listPage(int page)throws Exception;
+	
+	public List<BoardVO> listCriteria(Criteria cri)throws Exception;
 }
